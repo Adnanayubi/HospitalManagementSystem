@@ -1,0 +1,399 @@
+﻿@model HospitalManagementSystem.Models.Bill
+
+@{
+    ViewData["Title"] = "Bill Details";
+}
+
+<div class="container my-4">
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+
+        <div>
+            <h2 class="fw-bold">Bill Details</h2>
+            <p class="text-muted mb-0">
+                View and print patient billing information.
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <button type="button"
+                    class="btn btn-primary"
+                    onclick="window.print()">
+                <i class="bi bi-printer"></i>
+                Print Bill
+            </button>
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.BillId"
+               class="btn btn-warning">
+                <i class="bi bi-pencil"></i>
+                Edit
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bill -->
+    <div class="card shadow-sm border-0" id="printableBill">
+
+        <!-- Header -->
+        <div class="card-body p-4">
+
+            <div class="row align-items-center mb-4">
+
+                <div class="col-md-7">
+
+                    <h1 class="fw-bold text-primary mb-1">
+                        CITY CARE HOSPITAL
+                    </h1>
+
+                    <p class="text-muted mb-1">
+                        Hospital Management System
+                    </p>
+
+                    <p class="mb-0">
+                        Quality Healthcare & Professional Medical Services
+                    </p>
+
+                </div>
+
+                <div class="col-md-5 text-md-end mt-3 mt-md-0">
+
+                    <h3 class="fw-bold mb-2">
+                        BILL / INVOICE
+                    </h3>
+
+                    <p class="mb-1">
+                        <strong>Bill No:</strong>
+                        #@Model.BillId
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Date:</strong>
+                        @Model.BillDate.ToString("dd-MM-yyyy")
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <hr />
+
+
+            <!-- Patient Information -->
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+
+                    <h5 class="fw-bold text-primary mb-3">
+                        Patient Information
+                    </h5>
+
+                    <p class="mb-2">
+                        <strong>Name:</strong>
+                        @(Model.Patient?.PatientName ?? "N/A")
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Patient ID:</strong>
+                        @Model.PatientId
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Phone:</strong>
+                        @(Model.Patient?.Phone ?? "N/A")
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Email:</strong>
+                        @(Model.Patient?.Email ?? "N/A")
+                    </p>
+
+                </div>
+
+                <div class="col-md-6 mt-3 mt-md-0">
+
+                    <h5 class="fw-bold text-primary mb-3">
+                        Billing Information
+                    </h5>
+
+                    <p class="mb-2">
+                        <strong>Payment Status:</strong>
+
+                        @if (Model.PaymentStatus == "Paid")
+                        {
+                            <span class="badge bg-success">
+                                Paid
+                            </span>
+                        }
+                        else if (Model.PaymentStatus == "Pending")
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">
+                                @Model.PaymentStatus
+                            </span>
+                        }
+
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Payment Method:</strong>
+                        @(Model.PaymentMethod ?? "Not specified")
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Bill Date:</strong>
+                        @Model.BillDate.ToString("dd-MM-yyyy")
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Charges -->
+            <h5 class="fw-bold text-primary mb-3">
+                Billing Details
+            </h5>
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th style="width: 70%;">
+                                Description
+                            </th>
+
+                            <th class="text-end">
+                                Amount
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Consultation Fee</td>
+                            <td class="text-end">
+                                ₹@Model.ConsultationFee.ToString("N2")
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Medicine Charges</td>
+                            <td class="text-end">
+                                ₹@Model.MedicineCharges.ToString("N2")
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Laboratory Charges</td>
+                            <td class="text-end">
+                                ₹@Model.LabCharges.ToString("N2")
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Room Charges</td>
+                            <td class="text-end">
+                                ₹@Model.RoomCharges.ToString("N2")
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Other Charges</td>
+                            <td class="text-end">
+                                ₹@Model.OtherCharges.ToString("N2")
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                    <tfoot>
+
+                        <tr>
+                            <th class="text-end">
+                                Subtotal
+                            </th>
+
+                            <th class="text-end">
+                                ₹@(
+                                    (
+                                        Model.ConsultationFee +
+                                        Model.MedicineCharges +
+                                        Model.LabCharges +
+                                        Model.RoomCharges +
+                                        Model.OtherCharges
+                                    ).ToString("N2")
+                                )
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th class="text-end">
+                                Discount
+                            </th>
+
+                            <th class="text-end text-danger">
+                                - ₹@Model.Discount.ToString("N2")
+                            </th>
+                        </tr>
+
+                        <tr class="table-primary">
+
+                            <th class="text-end fs-5">
+                                TOTAL AMOUNT
+                            </th>
+
+                            <th class="text-end fs-5">
+                                ₹@Model.TotalAmount.ToString("N2")
+                            </th>
+
+                        </tr>
+
+                    </tfoot>
+
+                </table>
+
+            </div>
+
+
+            <!-- Notes -->
+            @if (!string.IsNullOrWhiteSpace(Model.Notes))
+            {
+                <div class="mt-4">
+
+                    <h5 class="fw-bold text-primary">
+                        Notes
+                    </h5>
+
+                    <div class="alert alert-light border">
+                        @Model.Notes
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- Footer -->
+            <div class="row mt-5">
+
+                <div class="col-md-6">
+
+                    <p class="mb-1">
+                        <strong>Amount Payable:</strong>
+                    </p>
+
+                    <h3 class="fw-bold text-success">
+                        ₹@Model.TotalAmount.ToString("N2")
+                    </h3>
+
+                </div>
+
+                <div class="col-md-6 text-md-end mt-4 mt-md-0">
+
+                    <p class="mb-5">
+                        Authorized Signature
+                    </p>
+
+                    <hr class="ms-auto"
+                        style="width: 200px;" />
+
+                </div>
+
+            </div>
+
+
+            <hr class="mt-5" />
+
+            <div class="text-center text-muted">
+
+                <small>
+                    Thank you for choosing City Care Hospital.
+                </small>
+
+                <br />
+
+                <small>
+                    This is a computer-generated bill.
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Styles {
+
+    <style>
+
+        @@media print {
+
+            body {
+                background: white !important;
+            }
+
+            .no-print,
+            nav,
+            header,
+            footer {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            #printableBill {
+                box-shadow: none !important;
+                border: none !important;
+            }
+
+            .card-body {
+                padding: 0 !important;
+            }
+
+            .table {
+                border: 1px solid #000 !important;
+            }
+
+            .table th,
+            .table td {
+                border: 1px solid #000 !important;
+            }
+
+            @@page {
+                size: A4;
+                margin: 15mm;
+            }
+
+        }
+
+    </style>
+}

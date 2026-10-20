@@ -1,0 +1,201 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Doctors Directory";
+    var departments = ViewBag.Departments
+        as IEnumerable<HospitalManagementSystem.Models.Department>
+        ?? Enumerable.Empty<HospitalManagementSystem.Models.Department>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex flex-wrap justify-content-between
+        align-items-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Doctors Directory</h2>
+            <p class="text-muted mb-0">
+                Search and manage your hospital's doctors.
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Add Doctor
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] is string successMessage)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @successMessage
+            <button type="button" class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get"
+                  class="row g-3 align-items-end">
+                <div class="col-12 col-md-4">
+                    <label for="searchString"
+                           class="form-label">Search</label>
+                    <input id="searchString" name="searchString"
+                           value="@ViewBag.SearchString"
+                           class="form-control"
+                           placeholder="Doctor name or specialization" />
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label for="departmentId"
+                           class="form-label">Department</label>
+                    <select id="departmentId" name="departmentId"
+                            class="form-select">
+                        <option value="">All departments</option>
+                        @foreach (var department in departments)
+                        {
+                            if (ViewBag.SelectedDepartmentId != null &&
+                                (int)ViewBag.SelectedDepartmentId
+                                    == department.DepartmentId)
+                            {
+                                <option value="@department.DepartmentId"
+                                        selected>
+                                    @department.DepartmentName
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@department.DepartmentId">
+                                    @department.DepartmentName
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label for="availabilityStatus"
+                           class="form-label">Availability</label>
+                    <select id="availabilityStatus"
+                            name="availabilityStatus"
+                            class="form-select">
+                        <option value="">All statuses</option>
+                        @foreach (var status in new[]
+                        {
+                            "Available", "Unavailable", "On Leave"
+                        })
+                        {
+                            if ((string?)ViewBag.SelectedAvailability
+                                == status)
+                            {
+                                <option value="@status" selected>
+                                    @status
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-2 d-flex gap-2">
+                    <button type="submit"
+                            class="btn btn-primary flex-grow-1">
+                        Search
+                    </button>
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Reset
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Doctor Records</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Specialization</th>
+                        <th>Department</th>
+                        <th>Contact</th>
+                        <th>Availability</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var doctor in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">
+                                    @doctor.DoctorName
+                                </td>
+                                <td>@doctor.Specialization</td>
+                                <td>
+                                    @(doctor.Department?.DepartmentName
+                                        ?? "Not assigned")
+                                </td>
+                                <td>
+                                    <div>@doctor.Phone</div>
+                                    <small class="text-muted">
+                                        @doctor.Email
+                                    </small>
+                                </td>
+                                <td>
+                                    @if (doctor.AvailabilityStatus == "Available")
+                                    {
+                                        <span class="badge bg-success">
+                                            Available
+                                        </span>
+                                    }
+                                    else if (doctor.AvailabilityStatus == "On Leave")
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            On Leave
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Unavailable
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-end text-nowrap">
+                                    <a asp-action="Details"
+                                       asp-route-id="@doctor.DoctorId"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Details
+                                    </a>
+                                    <a asp-action="Edit"
+                                       asp-route-id="@doctor.DoctorId"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6"
+                                class="text-center text-muted py-4">
+                                No doctors match your filters.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

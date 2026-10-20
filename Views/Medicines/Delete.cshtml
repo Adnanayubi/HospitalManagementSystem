@@ -1,0 +1,111 @@
+﻿@model HospitalManagementSystem.Models.Medicine
+
+@{
+    ViewData["Title"] = "Delete Medicine";
+}
+
+<h1>Delete Medicine</h1>
+
+<div class="alert alert-danger">
+
+    <strong>Warning!</strong>
+
+    Are you sure you want to delete this medicine?
+
+</div>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">
+        Medicine ID
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.MedicineId
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Medicine Name
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.MedicineName
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Generic Name
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.GenericName
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Category
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.Category
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Manufacturer
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.Manufacturer
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Price
+    </dt>
+
+    <dd class="col-sm-9">
+        ₹@Model.Price.ToString("0.00")
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Stock Quantity
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.StockQuantity
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Expiry Date
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.ExpiryDate?.ToString("dd-MM-yyyy")
+    </dd>
+
+</dl>
+
+<hr />
+
+<form asp-action="Delete" method="post">
+
+    <input type="hidden"
+           asp-for="MedicineId" />
+
+    <button type="submit"
+            class="btn btn-danger">
+        Delete Medicine
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>

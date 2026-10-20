@@ -1,0 +1,119 @@
+﻿@model HospitalManagementSystem.Models.Patient
+
+@{
+    ViewData["Title"] = "Patient Details";
+}
+
+<h1>Patient Details</h1>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">
+        Patient ID
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.PatientId)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Patient Name
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.PatientName)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Date of Birth
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.DateOfBirth?.ToString("dd-MM-yyyy")
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Gender
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Gender)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Phone
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Phone)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Email
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Address
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Address)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Blood Group
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.BloodGroup)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Emergency Contact
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.EmergencyContact)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Medical History
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.MedicalHistory)
+    </dd>
+
+</dl>
+
+<hr />
+
+<div>
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.PatientId"
+       class="btn btn-warning">
+        Edit
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back to List
+    </a>
+
+</div>

@@ -1,0 +1,185 @@
+﻿
+@model HospitalManagementSystem.Models.Doctor
+
+@{
+    ViewData["Title"] = "Edit Doctor";
+}
+
+<div class="container mt-4">
+    <h1><i class="bi bi-pencil-square"></i> Edit Doctor</h1>
+    <p class="text-muted">Update doctor information and availability.</p>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <form asp-action="Edit" method="post">
+
+                        <input type="hidden" asp-for="DoctorId" />
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3"></div>
+
+                        <!-- Doctor Name -->
+                        <div class="mb-3">
+                            <label asp-for="DoctorName"
+                                   class="form-label"></label>
+                            <input asp-for="DoctorName"
+                                   class="form-control"
+                                   placeholder="Enter doctor's full name" />
+                            <span asp-validation-for="DoctorName"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <!-- Specialization -->
+                        <div class="mb-3">
+                            <label asp-for="Specialization"
+                                   class="form-label"></label>
+
+                            <select asp-for="Specialization"
+                                    class="form-select">
+                                <option value="">-- Select Specialization --</option>
+                                <option value="Allergy and Immunology">Allergy and Immunology</option>
+                                <option value="Anesthesiology">Anesthesiology</option>
+                                <option value="Bariatric Medicine">Bariatric Medicine</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Cardiothoracic Surgery">Cardiothoracic Surgery</option>
+                                <option value="Child Psychiatry">Child Psychiatry</option>
+                                <option value="Clinical Pathology">Clinical Pathology</option>
+                                <option value="Critical Care Medicine">Critical Care Medicine</option>
+                                <option value="Dentistry">Dentistry</option>
+                                <option value="Dermatology">Dermatology</option>
+                                <option value="Diabetology">Diabetology</option>
+                                <option value="Emergency Medicine">Emergency Medicine — Independent clinical and academic medical specialty</option>
+                                <option value="Endocrinology">Endocrinology</option>
+                                <option value="ENT (Otolaryngology)">ENT (Otolaryngology)</option>
+                                <option value="Family Medicine">Family Medicine</option>
+                                <option value="Forensic Medicine">Forensic Medicine</option>
+                                <option value="Gastroenterology">Gastroenterology</option>
+                                <option value="General Medicine">General Medicine</option>
+                                <option value="General Surgery">General Surgery</option>
+                                <option value="Geriatric Medicine">Geriatric Medicine</option>
+                                <option value="Gynecology">Gynecology</option>
+                                <option value="Hematology">Hematology</option>
+                                <option value="Hepatology">Hepatology</option>
+                                <option value="Infectious Disease">Infectious Disease</option>
+                                <option value="Internal Medicine">Internal Medicine</option>
+                                <option value="Medical Oncology">Medical Oncology</option>
+                                <option value="Neonatology">Neonatology</option>
+                                <option value="Nephrology">Nephrology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Neurosurgery">Neurosurgery</option>
+                                <option value="Nuclear Medicine">Nuclear Medicine</option>
+                                <option value="Obstetrics and Gynecology">Obstetrics and Gynecology</option>
+                                <option value="Occupational Medicine">Occupational Medicine</option>
+                                <option value="Oncology">Oncology</option>
+                                <option value="Ophthalmology">Ophthalmology</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Pain Management">Pain Management</option>
+                                <option value="Palliative Medicine">Palliative Medicine</option>
+                                <option value="Pathology">Pathology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="Physical Medicine and Rehabilitation">Physical Medicine and Rehabilitation</option>
+                                <option value="Plastic Surgery">Plastic Surgery</option>
+                                <option value="Psychiatry">Psychiatry</option>
+                                <option value="Psychology">Psychology</option>
+                                <option value="Pulmonology">Pulmonology</option>
+                                <option value="Radiation Oncology">Radiation Oncology</option>
+                                <option value="Radiology">Radiology</option>
+                                <option value="Rheumatology">Rheumatology</option>
+                                <option value="Sleep Medicine">Sleep Medicine</option>
+                                <option value="Sports Medicine">Sports Medicine</option>
+                                <option value="Surgical Oncology">Surgical Oncology</option>
+                                <option value="Thoracic Surgery">Thoracic Surgery</option>
+                                <option value="Transfusion Medicine">Transfusion Medicine</option>
+                                <option value="Transplant Surgery">Transplant Surgery</option>
+                                <option value="Urology">Urology</option>
+                                <option value="Vascular Surgery">Vascular Surgery</option>
+                            </select>
+
+                            <span asp-validation-for="Specialization"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label asp-for="Phone"
+                                   class="form-label"></label>
+                            <input asp-for="Phone"
+                                   type="tel"
+                                   class="form-control"
+                                   placeholder="Enter phone number" />
+                            <span asp-validation-for="Phone"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label asp-for="Email"
+                                   class="form-label"></label>
+                            <input asp-for="Email"
+                                   type="email"
+                                   class="form-control"
+                                   placeholder="Enter email address" />
+                            <span asp-validation-for="Email"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <!-- Department -->
+                        <div class="mb-3">
+                            <label asp-for="DepartmentId"
+                                   class="form-label"></label>
+
+                            <select asp-for="DepartmentId"
+                                    class="form-select"
+                                    asp-items="ViewBag.Departments">
+                                <option value="">-- Select Department --</option>
+                            </select>
+
+                            <span asp-validation-for="DepartmentId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <!-- Availability Status -->
+                        <div class="mb-3">
+                            <label asp-for="AvailabilityStatus"
+                                   class="form-label"></label>
+
+                            <select asp-for="AvailabilityStatus"
+                                    class="form-select">
+                                <option value="Available">Available</option>
+                                <option value="Unavailable">Unavailable</option>
+                                <option value="On Leave">On Leave</option>
+                            </select>
+
+                            <span asp-validation-for="AvailabilityStatus"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Save Changes
+                            </button>
+
+                            <a asp-action="Index"
+                               class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

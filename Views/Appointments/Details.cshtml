@@ -1,0 +1,101 @@
+﻿@model HospitalManagementSystem.Models.Appointment
+
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<h1>Appointment Details</h1>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">
+        Appointment ID
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.AppointmentId
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Patient
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.Patient?.PatientName
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Doctor
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.Doctor?.DoctorName
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Appointment Date
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.AppointmentDate.ToString("dd-MM-yyyy")
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Appointment Time
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.AppointmentTime.ToString(@"hh\:mm")
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Reason for Visit
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.Reason
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Status
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.Status
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Notes
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.Notes
+    </dd>
+
+</dl>
+
+<hr />
+
+<div>
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.AppointmentId"
+       class="btn btn-warning">
+        Edit
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back to List
+    </a>
+
+</div>

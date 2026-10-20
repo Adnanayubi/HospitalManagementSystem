@@ -1,0 +1,509 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - Hospital Management System
+    </title>
+
+
+    <!-- Bootstrap -->
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+    <!-- Site CSS -->
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+
+    <!-- Page-specific CSS -->
+
+    @await RenderSectionAsync(
+        "Styles",
+        required: false)
+
+</head>
+
+
+<body class="bg-light">
+
+
+    <!-- ===================================== -->
+    <!-- NAVIGATION -->
+    <!-- ===================================== -->
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+
+            <div class="container">
+
+
+                <!-- Brand -->
+
+                <a class="navbar-brand fw-bold"
+                   asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <i class="bi bi-hospital"></i>
+
+                    Hospital Management System
+
+                </a>
+
+
+                <!-- Mobile Button -->
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavigation"
+                        aria-controls="mainNavigation"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+
+                <!-- Navigation Links -->
+
+                <div class="collapse navbar-collapse"
+                     id="mainNavigation">
+
+
+                    <ul class="navbar-nav ms-auto">
+
+
+                        <!-- Dashboard -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Dashboard"
+                               asp-action="Index">
+
+                                <i class="bi bi-speedometer2"></i>
+
+                                Dashboard
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Home -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Home"
+                               asp-action="Index">
+
+                                Home
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Departments -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Departments"
+                               asp-action="Index">
+
+                                Departments
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Doctors -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Doctors"
+                               asp-action="Index">
+
+                                Doctors
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Patients -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Patients"
+                               asp-action="Index">
+
+                                Patients
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Appointments -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Appointments"
+                               asp-action="Index">
+
+                                Appointments
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Medicines -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Medicines"
+                               asp-action="Index">
+
+                                Medicines
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Prescriptions -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Prescriptions"
+                               asp-action="Index">
+
+                                Prescriptions
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Bills -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Bills"
+                               asp-action="Index">
+
+                                Bills
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Privacy -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-area=""
+                               asp-controller="Home"
+                               asp-action="Privacy">
+
+                                Privacy
+
+                            </a>
+
+                        </li>
+
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ===================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ===================================== -->
+
+    <main role="main"
+          class="pb-5">
+
+        @RenderBody()
+
+    </main>
+
+
+    <!-- ===================================== -->
+    <!-- FOOTER -->
+    <!-- ===================================== -->
+
+    <footer class="border-top bg-white mt-5">
+
+        <div class="container">
+
+            <div class="row py-4">
+
+
+                <!-- About -->
+
+                <div class="col-md-6 mb-3 mb-md-0">
+
+                    <h5 class="fw-bold text-primary">
+
+                        <i class="bi bi-hospital"></i>
+
+                        Hospital Management System
+
+                    </h5>
+
+
+                    <p class="text-muted mb-0">
+
+                        A centralized system for managing
+                        patients, doctors, appointments,
+                        medicines, prescriptions and billing.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Quick Links -->
+
+                <div class="col-md-3">
+
+                    <h6 class="fw-bold">
+                        Quick Links
+                    </h6>
+
+
+                    <div>
+
+                        <a asp-controller="Dashboard"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Dashboard
+
+                        </a>
+
+                    </div>
+
+
+                    <div>
+
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Home
+
+                        </a>
+
+                    </div>
+
+
+                    <div>
+
+                        <a asp-controller="Patients"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Patients
+
+                        </a>
+
+                    </div>
+
+
+                    <div>
+
+                        <a asp-controller="Doctors"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Doctors
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- System -->
+
+                <div class="col-md-3">
+
+                    <h6 class="fw-bold">
+                        System
+                    </h6>
+
+
+                    <div>
+
+                        <a asp-controller="Appointments"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Appointments
+
+                        </a>
+
+                    </div>
+
+
+                    <div>
+
+                        <a asp-controller="Medicines"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Medicines
+
+                        </a>
+
+                    </div>
+
+
+                    <div>
+
+                        <a asp-controller="Prescriptions"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Prescriptions
+
+                        </a>
+
+                    </div>
+
+
+                    <div>
+
+                        <a asp-controller="Bills"
+                           asp-action="Index"
+                           class="text-decoration-none text-muted">
+
+                            Bills
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Copyright -->
+
+            <div class="border-top py-3">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+
+                            © @DateTime.Now.Year
+
+                            Hospital Management System
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-md-6 text-md-end">
+
+                        <a asp-controller="Home"
+                           asp-action="Privacy"
+                           class="text-decoration-none text-muted">
+
+                            Privacy Policy
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ===================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ===================================== -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+
+    <!-- Page-specific JavaScript -->
+
+    @await RenderSectionAsync(
+        "Scripts",
+        required: false)
+
+</body>
+
+</html>

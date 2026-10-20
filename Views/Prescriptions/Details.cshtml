@@ -1,0 +1,119 @@
+﻿@model HospitalManagementSystem.Models.Prescription
+
+@{
+    ViewData["Title"] = "Prescription Details";
+}
+
+<h1>Prescription Details</h1>
+
+<hr />
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h4 class="card-title">
+            Prescription #@Model.PrescriptionId
+        </h4>
+
+        <hr />
+
+        <dl class="row">
+
+            <!-- Patient -->
+            <dt class="col-sm-3">
+                Patient
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Patient?.PatientName
+            </dd>
+
+
+            <!-- Doctor -->
+            <dt class="col-sm-3">
+                Doctor
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Doctor?.DoctorName
+            </dd>
+
+
+            <!-- Medicine -->
+            <dt class="col-sm-3">
+                Medicine
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Medicine?.MedicineName
+            </dd>
+
+
+            <!-- Prescription Date -->
+            <dt class="col-sm-3">
+                Prescription Date
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.PrescriptionDate.ToString("dd-MM-yyyy")
+            </dd>
+
+
+            <!-- Dosage -->
+            <dt class="col-sm-3">
+                Dosage
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Dosage
+            </dd>
+
+
+            <!-- Frequency -->
+            <dt class="col-sm-3">
+                Frequency
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Frequency
+            </dd>
+
+
+            <!-- Duration -->
+            <dt class="col-sm-3">
+                Duration
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Duration
+            </dd>
+
+
+            <!-- Instructions -->
+            <dt class="col-sm-3">
+                Instructions
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Instructions
+            </dd>
+
+        </dl>
+
+        <hr />
+
+        <a asp-action="Edit"
+           asp-route-id="@Model.PrescriptionId"
+           class="btn btn-warning">
+            Edit
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Back to List
+        </a>
+
+    </div>
+
+</div>

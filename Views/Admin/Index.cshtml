@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-4">
+        <h1>Admin Dashboard</h1>
+        <p class="text-muted">
+            Welcome to the Hospital Management System
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>Doctors</h4>
+                    <p>Manage hospital doctors.</p>
+                    <a asp-controller="Doctor"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Manage Doctors
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>Patients</h4>
+                    <p>Manage hospital Patients.</p>
+                    <a asp-controller="Patients"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Manage Patients
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>Appointments</h4>
+                    <p>Manage appointments.</p>
+                    <a asp-controller="Appointments"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Manage Appointments
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mt-2">
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>Medicines</h4>
+                    <p>Manage medicines.</p>
+                    <a asp-controller="Medicines"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Manage Medicines
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>Prescriptions</h4>
+                    <p>Manage prescriptions.</p>
+                    <a asp-controller="Prescriptions"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Manage Prescriptions
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>Bills</h4>
+                    <p>Manage hospital billing.</p>
+                    <a asp-controller="Bills"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Manage Bills
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-5 text-center">
+
+        <form asp-controller="Account"
+              asp-action="Logout"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <button type="submit"
+                    class="btn btn-danger">
+                Logout
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

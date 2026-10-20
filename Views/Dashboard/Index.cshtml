@@ -1,0 +1,698 @@
+﻿@model HospitalManagementSystem.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- ========================= -->
+    <!-- Dashboard Header -->
+    <!-- ========================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Hospital Dashboard
+            </h2>
+
+            <p class="text-muted mb-0">
+                Overview of hospital operations and billing.
+            </p>
+
+        </div>
+
+        <div>
+
+            <span class="badge bg-primary fs-6 p-2">
+
+                <i class="bi bi-calendar3"></i>
+
+                @DateTime.Today.ToString("dd MMM yyyy")
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- Summary Cards -->
+    <!-- ========================= -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Patients -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Total Patients
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.TotalPatients
+                            </h2>
+
+                        </div>
+
+                        <div class="dashboard-icon bg-primary">
+
+                            <i class="bi bi-people-fill"></i>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-controller="Patients"
+                       asp-action="Index"
+                       class="small text-decoration-none">
+
+                        View Patients →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Doctors -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Total Doctors
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.TotalDoctors
+                            </h2>
+
+                        </div>
+
+                        <div class="dashboard-icon bg-success">
+
+                            <i class="bi bi-person-badge-fill"></i>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-controller="Doctors"
+                       asp-action="Index"
+                       class="small text-decoration-none">
+
+                        View Doctors →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Departments -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Departments
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.TotalDepartments
+                            </h2>
+
+                        </div>
+
+                        <div class="dashboard-icon bg-warning text-dark">
+
+                            <i class="bi bi-building"></i>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-controller="Departments"
+                       asp-action="Index"
+                       class="small text-decoration-none">
+
+                        View Departments →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Appointments -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Appointments
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.TotalAppointments
+                            </h2>
+
+                        </div>
+
+                        <div class="dashboard-icon bg-danger">
+
+                            <i class="bi bi-calendar-check-fill"></i>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-controller="Appointments"
+                       asp-action="Index"
+                       class="small text-decoration-none">
+
+                        View Appointments →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- Second Row Cards -->
+    <!-- ========================= -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Medicines -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Medicines
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.TotalMedicines
+                            </h2>
+
+                        </div>
+
+                        <div class="dashboard-icon bg-info">
+
+                            <i class="bi bi-capsule"></i>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-controller="Medicines"
+                       asp-action="Index"
+                       class="small text-decoration-none">
+
+                        View Medicines →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Prescriptions -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Prescriptions
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.TotalPrescriptions
+                            </h2>
+
+                        </div>
+
+                        <div class="dashboard-icon bg-secondary">
+
+                            <i class="bi bi-file-medical-fill"></i>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-controller="Prescriptions"
+                       asp-action="Index"
+                       class="small text-decoration-none">
+
+                        View Prescriptions →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Revenue -->
+        <div class="col-xl-6 col-md-12">
+
+            <div class="card dashboard-card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Total Revenue
+                            </p>
+
+                            <h2 class="fw-bold text-success mb-1">
+
+                                ₹@Model.TotalRevenue.ToString("N2")
+
+                            </h2>
+
+                            <small class="text-muted">
+                                Revenue from paid bills
+                            </small>
+
+                        </div>
+
+                        <div class="dashboard-icon bg-success">
+
+                            <i class="bi bi-currency-rupee"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-3">
+
+                        <a asp-controller="Bills"
+                           asp-action="Index"
+                           class="btn btn-sm btn-outline-success">
+
+                            View Billing
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- Charts -->
+    <!-- ========================= -->
+
+    <div class="row g-4">
+
+        <!-- Appointment Chart -->
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                    <h5 class="fw-bold mb-1">
+                        Appointment Status
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Current appointment distribution.
+                    </p>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height: 320px;">
+
+                        <canvas id="appointmentChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Revenue Chart -->
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-0 pt-4 px-4">
+
+                    <h5 class="fw-bold mb-1">
+                        Monthly Revenue
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Paid bill revenue for @DateTime.Today.Year.
+                    </p>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height: 320px;">
+
+                        <canvas id="revenueChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- Quick Actions -->
+    <!-- ========================= -->
+
+    <div class="card shadow-sm border-0 mt-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                Quick Actions
+            </h5>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                <a asp-controller="Patients"
+                   asp-action="Create"
+                   class="btn btn-primary">
+
+                    <i class="bi bi-person-plus"></i>
+                    Add Patient
+
+                </a>
+
+                <a asp-controller="Doctors"
+                   asp-action="Create"
+                   class="btn btn-success">
+
+                    <i class="bi bi-person-plus"></i>
+                    Add Doctor
+
+                </a>
+
+                <a asp-controller="Appointments"
+                   asp-action="Create"
+                   class="btn btn-danger">
+
+                    <i class="bi bi-calendar-plus"></i>
+                    New Appointment
+
+                </a>
+
+                <a asp-controller="Medicines"
+                   asp-action="Create"
+                   class="btn btn-info text-white">
+
+                    <i class="bi bi-plus-circle"></i>
+                    Add Medicine
+
+                </a>
+
+                <a asp-controller="Bills"
+                   asp-action="Create"
+                   class="btn btn-warning">
+
+                    <i class="bi bi-receipt"></i>
+                    Create Bill
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Styles {
+
+    <style>
+
+        .dashboard-card {
+            transition: transform 0.2s ease,
+                        box-shadow 0.2s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+        }
+
+        .dashboard-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            font-size: 24px;
+        }
+
+        .card {
+            border-radius: 12px;
+        }
+
+    </style>
+}
+
+
+@section Scripts {
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        // =========================================
+        // Appointment Status Chart
+        // =========================================
+
+        const appointmentChart =
+            document.getElementById("appointmentChart");
+
+        new Chart(appointmentChart, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "Scheduled",
+                    "Completed",
+                    "Cancelled"
+                ],
+
+                datasets: [{
+
+                    data: [
+                        @Model.ScheduledAppointments,
+                        @Model.CompletedAppointments,
+                        @Model.CancelledAppointments
+                    ]
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        });
+
+
+        // =========================================
+        // Monthly Revenue Chart
+        // =========================================
+
+        const revenueChart =
+            document.getElementById("revenueChart");
+
+        new Chart(revenueChart, {
+
+            type: "line",
+
+            data: {
+
+                labels: [
+
+                    @foreach (var item in Model.MonthlyRevenue)
+                    {
+                        <text>
+                            "@item.Month",
+                        </text>
+                    }
+
+                ],
+
+                datasets: [{
+
+                    label: "Revenue",
+
+                    data: [
+
+                        @foreach (var item in Model.MonthlyRevenue)
+                        {
+                            <text>
+                                @item.Revenue,
+                            </text>
+                        }
+
+                    ],
+
+                    tension: 0.3,
+
+                    fill: true
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            callback: function(value) {
+
+                                return "₹" +
+                                    value.toLocaleString("en-IN");
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    </script>
+}

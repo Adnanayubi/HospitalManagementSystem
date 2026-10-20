@@ -1,0 +1,197 @@
+﻿@model HospitalManagementSystem.Models.Appointment
+
+@{
+    ViewData["Title"] = "Create Appointment";
+}
+
+<h1>Create Appointment</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+            <!-- Patient -->
+            <div class="mb-3">
+
+                <label asp-for="PatientId"
+                       class="form-label">
+                </label>
+
+                <select asp-for="PatientId"
+                        class="form-select"
+                        asp-items="ViewBag.Patients">
+
+                    <option value="">
+                        -- Select Patient --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="PatientId"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Doctor -->
+            <div class="mb-3">
+
+                <label asp-for="DoctorId"
+                       class="form-label">
+                </label>
+
+                <select asp-for="DoctorId"
+                        class="form-select"
+                        asp-items="ViewBag.Doctors">
+
+                    <option value="">
+                        -- Select Doctor --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="DoctorId"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Appointment Date -->
+            <div class="mb-3">
+
+                <label asp-for="AppointmentDate"
+                       class="form-label">
+                </label>
+
+                <input asp-for="AppointmentDate"
+                       class="form-control"
+                       type="date" />
+
+                <span asp-validation-for="AppointmentDate"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Appointment Time -->
+            <div class="mb-3">
+
+                <label asp-for="AppointmentTime"
+                       class="form-label">
+                </label>
+
+                <input asp-for="AppointmentTime"
+                       class="form-control"
+                       type="time" />
+
+                <span asp-validation-for="AppointmentTime"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Reason -->
+            <div class="mb-3">
+
+                <label asp-for="Reason"
+                       class="form-label">
+                </label>
+
+                <textarea asp-for="Reason"
+                          class="form-control"
+                          rows="3">
+                </textarea>
+
+                <span asp-validation-for="Reason"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Status -->
+            <div class="mb-3">
+
+                <label asp-for="Status"
+                       class="form-label">
+                </label>
+
+                <select asp-for="Status"
+                        class="form-select">
+
+                    <option value="Scheduled">
+                        Scheduled
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                    <option value="Cancelled">
+                        Cancelled
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="Status"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Notes -->
+            <div class="mb-3">
+
+                <label asp-for="Notes"
+                       class="form-label">
+                </label>
+
+                <textarea asp-for="Notes"
+                          class="form-control"
+                          rows="4">
+                </textarea>
+
+                <span asp-validation-for="Notes"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Create Appointment
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back to List
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+}

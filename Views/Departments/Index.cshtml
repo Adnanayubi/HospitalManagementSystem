@@ -1,0 +1,252 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Department>
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<div class="container mt-4">
+
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="fw-bold">Departments</h1>
+
+            <p class="text-muted">
+                Manage hospital departments and their information.
+            </p>
+        </div>
+
+        <div class="col-md-4 text-md-end">
+            <a asp-action="Create" class="btn btn-primary">
+                + Add Department
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+
+        <!-- Total Departments -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Departments
+                    </h6>
+
+                    <h2 class="text-primary fw-bold">
+                        @Model.Count()
+                    </h2>
+
+                    <small class="text-muted">
+                        Registered hospital departments
+                    </small>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Departments With Description -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        With Description
+                    </h6>
+
+                    <h2 class="text-success fw-bold">
+                        @Model.Count(d => !string.IsNullOrWhiteSpace(d.Description))
+                    </h2>
+
+                    <small class="text-muted">
+                        Departments with details
+                    </small>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Department Information -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Department Management
+                    </h6>
+
+                    <h2 class="text-warning fw-bold">
+                        Active
+                    </h2>
+
+                    <small class="text-muted">
+                        Department management system
+                    </small>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Department Table -->
+    <div class="card shadow-sm border-0">
+
+        <!-- Card Header -->
+        <div class="card-header bg-primary text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Department Records
+                </h5>
+
+                <span class="badge bg-light text-primary">
+                    @Model.Count() Records
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+                                <th style="width: 100px;">
+                                    ID
+                                </th>
+
+                                <th>
+                                    Department Name
+                                </th>
+
+                                <th>
+                                    Description
+                                </th>
+
+                                <th style="width: 250px;"
+                                    class="text-center">
+                                    Actions
+                                </th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <!-- ID -->
+                                    <td>
+                                        <span class="fw-bold text-primary">
+                                            #@item.DepartmentId
+                                        </span>
+                                    </td>
+
+
+                                    <!-- Department Name -->
+                                    <td>
+
+                                        <span class="badge bg-primary px-3 py-2">
+                                            @item.DepartmentName
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Description -->
+                                    <td>
+
+                                        @if (!string.IsNullOrWhiteSpace(item.Description))
+                                        {
+                                            <span>
+                                                @item.Description
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                No description available
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- Actions -->
+                                    <td class="text-center text-nowrap">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.DepartmentId"
+                                           class="btn btn-info btn-sm">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.DepartmentId"
+                                           class="btn btn-warning btn-sm">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.DepartmentId"
+                                           class="btn btn-danger btn-sm">
+                                            Delete
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <!-- Empty State -->
+
+                <div class="text-center py-5">
+
+                    <h4 class="fw-bold">
+                        No Departments Found
+                    </h4>
+
+                    <p class="text-muted">
+                        There are currently no hospital departments.
+                    </p>
+
+                    <a asp-action="Create"
+                       class="btn btn-primary">
+                        + Add First Department
+                    </a>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

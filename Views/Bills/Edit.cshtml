@@ -1,0 +1,566 @@
+﻿@model HospitalManagementSystem.Models.Bill
+
+@{
+    ViewData["Title"] = "Edit Bill";
+}
+
+<div class="container">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">Edit Bill</h2>
+
+            <p class="text-muted mb-0">
+                Update patient billing and payment information.
+            </p>
+        </div>
+
+        <div>
+
+            <a asp-action="Details"
+               asp-route-id="@Model.BillId"
+               class="btn btn-info text-white">
+
+                <i class="bi bi-eye"></i>
+                View Bill
+
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Edit Form -->
+    <form asp-action="Edit"
+          asp-route-id="@Model.BillId"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+        <input type="hidden"
+               asp-for="BillId" />
+
+
+        <!-- Validation -->
+        <div asp-validation-summary="ModelOnly"
+             class="alert alert-danger">
+        </div>
+
+
+        <!-- Patient & Bill Information -->
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <h5 class="mb-0">
+                    Patient & Bill Information
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <!-- Patient -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="PatientId"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <select asp-for="PatientId"
+                                asp-items="ViewBag.PatientId"
+                                class="form-select">
+
+                            <option value="">
+                                -- Select Patient --
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="PatientId"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Bill Date -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="BillDate"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="BillDate"
+                               type="date"
+                               class="form-control" />
+
+                        <span asp-validation-for="BillDate"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Hospital Charges -->
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-success text-white">
+
+                <h5 class="mb-0">
+                    Hospital Charges
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <!-- Consultation -->
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="ConsultationFee"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input asp-for="ConsultationFee"
+                                   class="form-control charge-input"
+                                   type="number"
+                                   step="0.01"
+                                   min="0" />
+
+                        </div>
+
+                        <span asp-validation-for="ConsultationFee"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Medicine -->
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="MedicineCharges"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input asp-for="MedicineCharges"
+                                   class="form-control charge-input"
+                                   type="number"
+                                   step="0.01"
+                                   min="0" />
+
+                        </div>
+
+                        <span asp-validation-for="MedicineCharges"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Lab -->
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="LabCharges"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input asp-for="LabCharges"
+                                   class="form-control charge-input"
+                                   type="number"
+                                   step="0.01"
+                                   min="0" />
+
+                        </div>
+
+                        <span asp-validation-for="LabCharges"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Room -->
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="RoomCharges"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input asp-for="RoomCharges"
+                                   class="form-control charge-input"
+                                   type="number"
+                                   step="0.01"
+                                   min="0" />
+
+                        </div>
+
+                        <span asp-validation-for="RoomCharges"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Other -->
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="OtherCharges"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input asp-for="OtherCharges"
+                                   class="form-control charge-input"
+                                   type="number"
+                                   step="0.01"
+                                   min="0" />
+
+                        </div>
+
+                        <span asp-validation-for="OtherCharges"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Discount -->
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="Discount"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input asp-for="Discount"
+                                   class="form-control charge-input"
+                                   type="number"
+                                   step="0.01"
+                                   min="0" />
+
+                        </div>
+
+                        <span asp-validation-for="Discount"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Total -->
+                <div class="row mt-3">
+
+                    <div class="col-md-6 ms-auto">
+
+                        <div class="card bg-light border-0">
+
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <span class="fw-semibold">
+                                        Total Amount
+                                    </span>
+
+                                    <span class="fs-4 fw-bold text-success">
+
+                                        ₹<span id="totalAmount">
+                                            @Model.TotalAmount.ToString("N2")
+                                        </span>
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Payment Information -->
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-dark text-white">
+
+                <h5 class="mb-0">
+                    Payment Information
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <!-- Payment Status -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="PaymentStatus"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <select asp-for="PaymentStatus"
+                                class="form-select">
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="Paid">
+                                Paid
+                            </option>
+
+                            <option value="Partially Paid">
+                                Partially Paid
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="PaymentStatus"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Payment Method -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="PaymentMethod"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <select asp-for="PaymentMethod"
+                                class="form-select">
+
+                            <option value="">
+                                -- Select Payment Method --
+                            </option>
+
+                            <option value="Cash">
+                                Cash
+                            </option>
+
+                            <option value="Card">
+                                Card
+                            </option>
+
+                            <option value="UPI">
+                                UPI
+                            </option>
+
+                            <option value="Bank Transfer">
+                                Bank Transfer
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="PaymentMethod"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Notes -->
+                    <div class="col-12 mb-3">
+
+                        <label asp-for="Notes"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <textarea asp-for="Notes"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Enter billing notes...">
+                        </textarea>
+
+                        <span asp-validation-for="Notes"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2 mb-5">
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i class="bi bi-save"></i>
+                Save Changes
+
+            </button>
+
+
+            <a asp-action="Details"
+               asp-route-id="@Model.BillId"
+               class="btn btn-info text-white">
+
+                View Bill
+
+            </a>
+
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        function calculateTotal() {
+
+            const consultation =
+                parseFloat(
+                    document.getElementById("ConsultationFee").value
+                ) || 0;
+
+            const medicine =
+                parseFloat(
+                    document.getElementById("MedicineCharges").value
+                ) || 0;
+
+            const lab =
+                parseFloat(
+                    document.getElementById("LabCharges").value
+                ) || 0;
+
+            const room =
+                parseFloat(
+                    document.getElementById("RoomCharges").value
+                ) || 0;
+
+            const other =
+                parseFloat(
+                    document.getElementById("OtherCharges").value
+                ) || 0;
+
+            const discount =
+                parseFloat(
+                    document.getElementById("Discount").value
+                ) || 0;
+
+
+            const subtotal =
+                consultation +
+                medicine +
+                lab +
+                room +
+                other;
+
+
+            const total =
+                Math.max(subtotal - discount, 0);
+
+
+            document.getElementById("totalAmount")
+                .textContent = total.toFixed(2);
+        }
+
+
+        document
+            .querySelectorAll(".charge-input")
+            .forEach(function (input) {
+
+                input.addEventListener(
+                    "input",
+                    calculateTotal
+                );
+
+            });
+
+
+        calculateTotal();
+
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿@model HospitalManagementSystem.Models.Department
+
+@{
+    ViewData["Title"] = "Department Details";
+}
+
+<h1>Department Details</h1>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.DepartmentId)
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.DepartmentId)
+    </dd>
+
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.DepartmentName)
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.DepartmentName)
+    </dd>
+
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+
+</dl>
+
+<div>
+    <a asp-action="Edit"
+       asp-route-id="@Model.DepartmentId"
+       class="btn btn-warning">
+        Edit
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back to List
+    </a>
+</div>

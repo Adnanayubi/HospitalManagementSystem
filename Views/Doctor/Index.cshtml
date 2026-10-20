@@ -1,0 +1,118 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Doctors</h2>
+
+            <p class="text-muted">
+                Manage hospital doctors
+            </p>
+        </div>
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Doctor ID</th>
+                        <th>Doctor Name</th>
+                        <th>Specialization</th>
+                        <th>Department</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var doctor in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @doctor.DoctorId
+                            </td>
+
+                            <td>
+                                @doctor.DoctorName
+                            </td>
+
+                            <td>
+                                @doctor.Specialization
+                            </td>
+
+                            <td>
+                                @(doctor.Department?.DepartmentName ?? "Not assigned")
+                            </td>
+
+                            <td>
+                                @(doctor.Phone ?? "Not provided")
+                            </td>
+
+                            <td>
+                                @(doctor.Email ?? "Not provided")
+                            </td>
+
+                            <td>
+
+                                <a asp-controller="Doctor"
+                                   asp-action="Details"
+                                   asp-route-id="@doctor.DoctorId"
+                                   class="btn btn-info btn-sm">
+                                    Details
+                                </a>
+
+                                <a asp-controller="Doctor"
+                                   asp-action="Edit"
+                                   asp-route-id="@doctor.DoctorId"
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+
+                                <a asp-controller="Doctor"
+                                   asp-action="Delete"
+                                   asp-route-id="@doctor.DoctorId"
+                                   class="btn btn-danger btn-sm">
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No doctors found in the database.
+        </div>
+    }
+
+</div>

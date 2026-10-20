@@ -1,0 +1,449 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Appointments";
+
+    var appointments = Model.ToList();
+
+    var totalAppointments = appointments.Count;
+
+    var scheduledAppointments = appointments.Count(a =>
+        a.Status.Equals("Scheduled", StringComparison.OrdinalIgnoreCase));
+
+    var completedAppointments = appointments.Count(a =>
+        a.Status.Equals("Completed", StringComparison.OrdinalIgnoreCase));
+
+    var cancelledAppointments = appointments.Count(a =>
+        a.Status.Equals("Cancelled", StringComparison.OrdinalIgnoreCase));
+}
+
+<div class="container mt-4">
+
+    <!-- Page Header -->
+    <div class="row mb-4">
+
+        <div class="col-md-8">
+
+            <h1 class="fw-bold">
+                Appointments
+            </h1>
+
+            <p class="text-muted">
+                Manage patient appointments, doctors, schedules and visit status.
+            </p>
+
+        </div>
+
+        <div class="col-md-4 text-md-end">
+
+            <a asp-action="Create"
+               class="btn btn-primary">
+                + Add Appointment
+            </a>
+
+        </div>
+
+    </div>
+
+<form asp-controller="Appointments"
+      asp-action="Index"
+      method="get"
+      class="row g-2 mb-3">
+
+    <div class="col-md-8">
+        <input type="text"
+               name="searchString"
+               value="@ViewBag.SearchString"
+               class="form-control"
+               placeholder="Search appointments..." />
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+            Search
+        </button>
+    </div>
+
+    <div class="col-auto">
+        <a asp-controller="Appointments"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Clear
+        </a>
+    </div>
+</form>
+
+
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+
+        <!-- Total -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Appointments
+                    </h6>
+
+                    <h2 class="text-primary fw-bold">
+                        @totalAppointments
+                    </h2>
+
+                    <small class="text-muted">
+                        All appointment records
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Scheduled -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Scheduled
+                    </h6>
+
+                    <h2 class="text-success fw-bold">
+                        @scheduledAppointments
+                    </h2>
+
+                    <small class="text-muted">
+                        Upcoming appointments
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Completed -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Completed
+                    </h6>
+
+                    <h2 class="text-warning fw-bold">
+                        @completedAppointments
+                    </h2>
+
+                    <small class="text-muted">
+                        Completed visits
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Cancelled -->
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Cancelled
+                    </h6>
+
+                    <h2 class="text-danger fw-bold">
+                        @cancelledAppointments
+                    </h2>
+
+                    <small class="text-muted">
+                        Cancelled appointments
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Appointment Records -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Appointment Records
+                </h5>
+
+                <span class="badge bg-light text-primary">
+                    @totalAppointments Appointments
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            @if (appointments.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Patient</th>
+
+                                <th>Doctor</th>
+
+                                <th>Date</th>
+
+                                <th>Time</th>
+
+                                <th>Reason</th>
+
+                                <th>Status</th>
+
+                                <th>Notes</th>
+
+                                <th class="text-center">
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            @foreach (var item in appointments
+                                .OrderByDescending(a => a.AppointmentDate)
+                                .ThenBy(a => a.AppointmentTime))
+                            {
+                                <tr>
+
+                                    <!-- ID -->
+                                    <td>
+
+                                        <span class="fw-bold text-primary">
+                                            #@item.AppointmentId
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Patient -->
+                                    <td>
+
+                                        @if (item.Patient != null)
+                                        {
+                                            <strong>
+                                                @item.Patient.PatientName
+                                            </strong>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                Patient not found
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- Doctor -->
+                                    <td>
+
+                                        @if (item.Doctor != null)
+                                        {
+                                            <span class="badge bg-info text-dark">
+                                                @item.Doctor.DoctorName
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                Doctor not found
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- Date -->
+                                    <td>
+
+                                        <span>
+                                            @item.AppointmentDate.ToString("dd-MM-yyyy")
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Time -->
+                                    <td>
+
+                                        <span class="badge bg-secondary">
+                                            @item.AppointmentTime.ToString(@"hh\:mm")
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Reason -->
+                                    <td>
+
+                                        @if (!string.IsNullOrWhiteSpace(item.Reason))
+                                        {
+                                            @item.Reason
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                Not specified
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- Status -->
+                                    <td>
+
+                                        @if (item.Status.Equals(
+                                            "Scheduled",
+                                            StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <span class="badge bg-success">
+                                                Scheduled
+                                            </span>
+                                        }
+                                        else if (item.Status.Equals(
+                                            "Completed",
+                                            StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <span class="badge bg-primary">
+                                                Completed
+                                            </span>
+                                        }
+                                        else if (item.Status.Equals(
+                                            "Cancelled",
+                                            StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <span class="badge bg-danger">
+                                                Cancelled
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                @item.Status
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- Notes -->
+                                    <td>
+
+                                        @if (!string.IsNullOrWhiteSpace(item.Notes))
+                                        {
+                                            @item.Notes
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                No notes
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- Actions -->
+                                    <td class="text-center text-nowrap">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.AppointmentId"
+                                           class="btn btn-info btn-sm">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.AppointmentId"
+                                           class="btn btn-warning btn-sm">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.AppointmentId"
+                                           class="btn btn-danger btn-sm">
+                                            Delete
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <!-- Empty State -->
+
+                <div class="text-center py-5">
+
+                    <h4 class="fw-bold">
+                        No Appointments Found
+                    </h4>
+
+                    <p class="text-muted">
+                        There are currently no appointments registered.
+                    </p>
+
+                    <a asp-action="Create"
+                       class="btn btn-primary">
+                        + Add First Appointment
+                    </a>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

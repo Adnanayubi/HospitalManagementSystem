@@ -1,0 +1,301 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patients | Hospital Management System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body class="patients-page">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/index.html">
+                Hospital Management System
+            </a>
+
+            <a href="/" class="btn btn-light btn-sm">
+                Go To Home
+            </a>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+                <h1 class="fw-bold text-primary">Patient Records</h1>
+                <p class="text-secondary mb-0">
+                    Manage patients in the hospital database.
+                </p>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button id="refreshButton" class="btn btn-outline-primary">
+                    Refresh Records
+                </button>
+                <button id="addPatientButton" class="btn btn-primary">
+                    + Add Patient
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Add/Edit Patient Modal -->
+        <div class="modal fade" id="patientFormModal"
+             tabindex="-1" aria-labelledby="patientFormTitle"
+             aria-hidden="true">
+
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="patientFormTitle">
+                            Add Patient
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+
+                    <form id="patientForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="patientId">
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <label for="patientName" class="form-label">
+                                        Patient Name *
+                                    </label>
+                                    <input id="patientName" name="patientName"
+                                           class="form-control" maxlength="100"
+                                           required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="dateOfBirth" class="form-label">
+                                        Date of Birth *
+                                    </label>
+                                    <input type="date" id="dateOfBirth"
+                                           name="dateOfBirth" class="form-control"
+                                           required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="gender" class="form-label">
+                                        Gender *
+                                    </label>
+                                    <select id="gender" name="gender"
+                                            class="form-select" required>
+                                        <option value="">Select gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="bloodGroup" class="form-label">
+                                        Blood Group
+                                    </label>
+                                    <select id="bloodGroup" name="bloodGroup"
+                                            class="form-select">
+                                        <option value="">Select blood group</option>
+                                        <option>A+</option>
+                                        <option>A-</option>
+                                        <option>B+</option>
+                                        <option>B-</option>
+                                        <option>AB+</option>
+                                        <option>AB-</option>
+                                        <option>O+</option>
+                                        <option>O-</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">
+                                        Phone *
+                                    </label>
+                                    <input type="tel" id="phone" name="phone"
+                                           class="form-control" maxlength="20"
+                                           required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">
+                                        Email
+                                    </label>
+                                    <input type="email" id="email" name="email"
+                                           class="form-control" maxlength="256">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="emergencyContact"
+                                           class="form-label">
+                                        Emergency Contact
+                                    </label>
+                                    <input type="tel" id="emergencyContact"
+                                           name="emergencyContact"
+                                           class="form-control" maxlength="20">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="address" class="form-label">
+                                        Address
+                                    </label>
+                                    <input id="address" name="address"
+                                           class="form-control" maxlength="250">
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="medicalHistory"
+                                           class="form-label">
+                                        Medical History
+                                    </label>
+                                    <textarea id="medicalHistory"
+                                              name="medicalHistory"
+                                              class="form-control"
+                                              rows="3" maxlength="2000"></textarea>
+                                </div>
+
+                            </div>
+
+                            <div id="formError"
+                                 class="alert alert-danger mt-3 mb-0"
+                                 role="alert" hidden></div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+
+                            <button type="submit" id="savePatientButton"
+                                    class="btn btn-primary">
+                                Save Patient
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <p class="text-secondary mb-1">Total Patients</p>
+                        <h2 id="totalPatients" class="text-primary mb-0">—</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <label for="searchInput" class="form-label fw-semibold">
+                            Search Patients
+                        </label>
+                        <input type="search"
+                               id="searchInput"
+                               class="form-control"
+                               placeholder="Search by name, ID, phone, or address">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="statusMessage"
+             class="alert alert-info"
+             role="status"
+             aria-live="polite">
+            Loading patient records...
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient Name</th>
+                                <th>Date of Birth</th>
+                                <th>Gender</th>
+                                <th>Phone</th>
+                                <th>Blood Group</th>
+                                <th>Address</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="patientsTableBody">
+                            <tr>
+                                <td colspan="8" class="text-center py-4">
+                                    Loading records...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p id="resultCount" class="text-secondary small mb-0"></p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Patient details modal -->
+    <div class="modal fade" id="patientModal"
+         tabindex="-1" aria-labelledby="patientModalTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="patientModalTitle">
+                        Patient Details
+                    </h5>
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body" id="patientDetailsBody"></div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4 border-top bg-light">
+        <p class="mb-0 text-secondary">
+            Hospital Management System | ASP.NET Core
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/patients.js"></script>
+</body>
+</html>

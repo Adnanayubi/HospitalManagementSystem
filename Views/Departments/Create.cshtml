@@ -1,0 +1,67 @@
+﻿@model HospitalManagementSystem.Models.Department
+
+@{
+    ViewData["Title"] = "Create Department";
+}
+
+<h1>Create Department</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DepartmentName"
+                       class="form-label">
+                </label>
+
+                <input asp-for="DepartmentName"
+                       class="form-control" />
+
+                <span asp-validation-for="DepartmentName"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description"
+                       class="form-label">
+                </label>
+
+                <textarea asp-for="Description"
+                          class="form-control">
+                </textarea>
+
+                <span asp-validation-for="Description"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Create
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back to List
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+}

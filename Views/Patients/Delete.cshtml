@@ -1,0 +1,99 @@
+﻿@model HospitalManagementSystem.Models.Patient
+
+@{
+    ViewData["Title"] = "Delete Patient";
+}
+
+<h1>Delete Patient</h1>
+
+<div class="alert alert-danger">
+    <strong>Warning!</strong>
+    Are you sure you want to delete this patient?
+</div>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">
+        Patient ID
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.PatientId)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Patient Name
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.PatientName)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Date of Birth
+    </dt>
+
+    <dd class="col-sm-9">
+        @Model.DateOfBirth?.ToString("dd-MM-yyyy")
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Gender
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Gender)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Phone
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Phone)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Email
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+
+
+    <dt class="col-sm-3">
+        Blood Group
+    </dt>
+
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.BloodGroup)
+    </dd>
+
+</dl>
+
+<hr />
+
+<form asp-action="Delete" method="post">
+
+    <input type="hidden"
+           asp-for="PatientId" />
+
+    <button type="submit"
+            class="btn btn-danger">
+        Delete Patient
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>

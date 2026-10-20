@@ -1,0 +1,360 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Medicine>
+
+@{
+    ViewData["Title"] = "Medicines";
+
+    var medicines = Model.ToList();
+
+    var totalMedicines = medicines.Count;
+    var totalStock = medicines.Sum(m => m.StockQuantity);
+
+    var lowStockMedicines = medicines.Count(m =>
+        m.StockQuantity > 0 && m.StockQuantity <= 20);
+
+    var outOfStockMedicines = medicines.Count(m =>
+        m.StockQuantity == 0);
+
+    var categories = ViewBag.Categories as IEnumerable<string>
+                     ?? Enumerable.Empty<string>();
+
+    var selectedCategory = ViewBag.SelectedCategory as string ?? "";
+    var searchString = ViewBag.SearchString as string ?? "";
+}
+
+<div class="container mt-4">
+
+    <!-- Page Header -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="fw-bold">
+                <i class="bi bi-capsule"></i> Medicines
+            </h1>
+
+            <p class="text-muted">
+                Manage medicines, photos, stock, prices and expiry information.
+            </p>
+        </div>
+
+        <div class="col-md-4 text-md-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add Medicine
+            </a>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Medicines</h6>
+                    <h2 class="text-primary fw-bold">@totalMedicines</h2>
+                    <small class="text-muted">Matching records</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Stock</h6>
+                    <h2 class="text-success fw-bold">@totalStock</h2>
+                    <small class="text-muted">Units in matching records</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Low Stock</h6>
+                    <h2 class="text-warning fw-bold">@lowStockMedicines</h2>
+                    <small class="text-muted">20 units or less</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Out of Stock</h6>
+                    <h2 class="text-danger fw-bold">@outOfStockMedicines</h2>
+                    <small class="text-muted">No available units</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Search and Category Filter -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <form asp-controller="Medicines"
+                  asp-action="Index"
+                  method="get">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-md-5">
+                        <label for="searchString" class="form-label">
+                            Search Medicine
+                        </label>
+
+                        <input type="text"
+                               id="searchString"
+                               name="searchString"
+                               value="@searchString"
+                               class="form-control"
+                               placeholder="Enter medicine name..." />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="category" class="form-label">
+                            Select Category
+                        </label>
+
+                        <select id="category"
+                                name="category"
+                                class="form-select">
+
+                            <option value="">All Categories</option>
+
+                            @foreach (var item in categories)
+                            {
+                                <option value="@item"
+                                        selected="@(selectedCategory == item)">
+                                    @item
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+
+                        <a asp-controller="Medicines"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            Clear
+                        </a>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Medicine Records -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Medicine Records</h5>
+
+                <span class="badge bg-light text-primary">
+                    @totalMedicines Medicines
+                </span>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            @if (medicines.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Photo</th>
+                                <th>Medicine Name</th>
+                                <th>Generic Name</th>
+                                <th>Category</th>
+                                <th>Dosage</th>
+                                <th>Manufacturer</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Expiry Date</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in medicines.OrderBy(m => m.MedicineName))
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold text-primary">
+                                            #@item.MedicineId
+                                        </span>
+                                    </td>
+
+                                    <!-- Medicine Photo -->
+                                    <td>
+                                        @{
+                                            var imageName = item.MedicineName
+                                                .ToLowerInvariant()
+                                                .Replace(" ", "-");
+                                        }
+
+                                        <img src="~/images/medicines/@(imageName).jpg"
+                                             alt="@item.MedicineName"
+                                             width="65"
+                                             height="65"
+                                             class="rounded border"
+                                             style="object-fit:contain;"
+                                             onerror="this.onerror=null;this.src='/images/medicines/default-medicine.png';" />
+                                    </td>
+
+                                    <td>
+                                        <strong>@item.MedicineName</strong>
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.GenericName))
+                                        {
+                                            @item.GenericName
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not available</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.Category))
+                                        {
+                                            <span class="badge bg-info text-dark">
+                                                @item.Category
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not specified</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.Dosage))
+                                        {
+                                            <span class="badge bg-secondary">
+                                                @item.Dosage
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not specified</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @(string.IsNullOrWhiteSpace(item.Manufacturer)
+                                            ? "Not available"
+                                            : item.Manufacturer)
+                                    </td>
+
+                                    <td>
+                                        <strong>₹@item.Price.ToString("N2")</strong>
+                                    </td>
+
+                                    <td>
+                                        @if (item.StockQuantity == 0)
+                                        {
+                                            <span class="badge bg-danger">Out of Stock</span>
+                                        }
+                                        else if (item.StockQuantity <= 20)
+                                        {
+                                            <span class="badge bg-warning text-dark">
+                                                @item.StockQuantity Low
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">
+                                                @item.StockQuantity Available
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (item.ExpiryDate.HasValue)
+                                        {
+                                            @item.ExpiryDate.Value.ToString("dd-MM-yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not available</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-center text-nowrap">
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.MedicineId"
+                                           class="btn btn-info btn-sm mb-1">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.MedicineId"
+                                           class="btn btn-warning btn-sm mb-1">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.MedicineId"
+                                           class="btn btn-danger btn-sm mb-1">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-capsule display-4 text-muted"></i>
+
+                    <h4 class="fw-bold mt-3">No Medicines Found</h4>
+
+                    <p class="text-muted">
+                        No medicines match your search or selected category.
+                    </p>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-primary me-2">
+                        Clear Filters
+                    </a>
+
+                    <a asp-action="Create"
+                       class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Medicine
+                    </a>
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>

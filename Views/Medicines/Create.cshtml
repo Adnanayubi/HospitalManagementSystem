@@ -1,0 +1,262 @@
+﻿
+@model HospitalManagementSystem.Models.Medicine
+
+@{
+    ViewData["Title"] = "Create Medicine";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white py-3">
+            <h3 class="mb-0">
+                <i class="bi bi-capsule"></i> Create Medicine
+            </h3>
+        </div>
+
+        <div class="card-body p-4">
+
+            <p class="text-muted">
+                Enter the medicine details below to add a new record
+                to the hospital inventory.
+            </p>
+
+            <hr />
+
+            <form asp-controller="Medicines"
+                  asp-action="Create"
+                  method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <!-- Medicine Name -->
+                <div class="mb-3">
+                    <label asp-for="MedicineName"
+                           class="form-label fw-semibold"></label>
+
+                    <input asp-for="MedicineName"
+                           class="form-control"
+                           placeholder="Enter medicine name" />
+
+                    <span asp-validation-for="MedicineName"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Generic Name -->
+                <div class="mb-3">
+                    <label asp-for="GenericName"
+                           class="form-label fw-semibold"></label>
+
+                    <input asp-for="GenericName"
+                           class="form-control"
+                           placeholder="Enter generic name" />
+
+                    <span asp-validation-for="GenericName"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Category Dropdown -->
+                <div class="mb-3">
+                    <label asp-for="Category"
+                           class="form-label fw-semibold"></label>
+
+                    <select asp-for="Category"
+                            class="form-select">
+
+                        <option value="">-- Select Category --</option>
+
+                        <option value="General Medicine">
+                            General Medicine
+                        </option>
+
+                        <option value="Pain Relief">
+                            Pain Relief
+                        </option>
+
+                        <option value="Supplements">
+                            Supplements
+                        </option>
+
+                        <option value="Rehydration">
+                            Rehydration
+                        </option>
+
+                        <option value="Allergy">
+                            Allergy
+                        </option>
+
+                        <option value="Antibiotics">
+                            Antibiotics
+                        </option>
+
+                        <option value="Vitamins">
+                            Vitamins
+                        </option>
+
+                        <option value="First Aid">
+                            First Aid
+                        </option>
+
+                        <option value="Digestive Health">
+                            Digestive Health
+                        </option>
+
+                        <option value="Skin Care">
+                            Skin Care
+                        </option>
+
+                        <option value="Tablet">
+                            Tablet
+                        </option>
+
+                        <option value="Capsule">
+                            Capsule
+                        </option>
+
+                        <option value="Syrup">
+                            Syrup
+                        </option>
+
+                        <option value="Injection">
+                            Injection
+                        </option>
+
+                        <option value="Cream">
+                            Cream
+                        </option>
+
+                        <option value="Drops">
+                            Drops
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="Category"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Dosage -->
+                <div class="mb-3">
+                    <label asp-for="Dosage"
+                           class="form-label fw-semibold"></label>
+
+                    <input asp-for="Dosage"
+                           class="form-control"
+                           placeholder="Example: 500 mg" />
+
+                    <span asp-validation-for="Dosage"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Manufacturer -->
+                <div class="mb-3">
+                    <label asp-for="Manufacturer"
+                           class="form-label fw-semibold"></label>
+
+                    <input asp-for="Manufacturer"
+                           class="form-control"
+                           placeholder="Enter manufacturer name" />
+
+                    <span asp-validation-for="Manufacturer"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-3">
+                    <label asp-for="Price"
+                           class="form-label fw-semibold"></label>
+
+                    <div class="input-group">
+                        <span class="input-group-text">₹</span>
+
+                        <input asp-for="Price"
+                               class="form-control"
+                               type="number"
+                               step="0.01"
+                               min="0"
+                               placeholder="0.00" />
+                    </div>
+
+                    <span asp-validation-for="Price"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Stock Quantity -->
+                <div class="mb-3">
+                    <label asp-for="StockQuantity"
+                           class="form-label fw-semibold"></label>
+
+                    <input asp-for="StockQuantity"
+                           class="form-control"
+                           type="number"
+                           min="0"
+                           placeholder="Enter available quantity" />
+
+                    <span asp-validation-for="StockQuantity"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Expiry Date -->
+                <div class="mb-3">
+                    <label asp-for="ExpiryDate"
+                           class="form-label fw-semibold"></label>
+
+                    <input asp-for="ExpiryDate"
+                           class="form-control"
+                           type="date" />
+
+                    <span asp-validation-for="ExpiryDate"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label asp-for="Description"
+                           class="form-label fw-semibold"></label>
+
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Enter medicine description"></textarea>
+
+                    <span asp-validation-for="Description"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex flex-wrap gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i>
+                        Create Medicine
+                    </button>
+
+                    <a asp-controller="Medicines"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i>
+                        Back to List
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+}

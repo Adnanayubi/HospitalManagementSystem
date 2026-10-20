@@ -1,0 +1,304 @@
+﻿
+@model IEnumerable<HospitalManagementSystem.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patients";
+
+    var patients = Model.ToList();
+
+    var totalPatients = patients.Count;
+
+    var malePatients = patients.Count(p =>
+        !string.IsNullOrWhiteSpace(p.Gender) &&
+        p.Gender.Equals("Male", StringComparison.OrdinalIgnoreCase));
+
+    var femalePatients = patients.Count(p =>
+        !string.IsNullOrWhiteSpace(p.Gender) &&
+        p.Gender.Equals("Female", StringComparison.OrdinalIgnoreCase));
+
+    var patientsWithPhone = patients.Count(p =>
+        !string.IsNullOrWhiteSpace(p.Phone));
+
+    var searchString = ViewBag.SearchString as string;
+}
+
+<div class="container mt-4">
+
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="fw-bold">Patients</h1>
+            <p class="text-muted">
+                Manage patient information, contact details and medical records.
+            </p>
+        </div>
+
+        <div class="col-md-4 text-md-end">
+            <a asp-action="Create" class="btn btn-primary">
+                + Add Patient
+            </a>
+        </div>
+    </div>
+
+    <!-- Search Form -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <form asp-controller="Patients"
+                  asp-action="Index"
+                  method="get"
+                  class="row g-2 align-items-center">
+
+                <div class="col-md-8">
+                    <input type="text"
+                           name="searchString"
+                           value="@searchString"
+                           class="form-control"
+                           placeholder="Search by Patient ID, name, phone or email..." />
+                </div>
+
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-md-auto">
+                    <a asp-controller="Patients"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Clear
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Patients</h6>
+                    <h2 class="text-primary fw-bold">@totalPatients</h2>
+                    <small class="text-muted">Patients in this list</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Male Patients</h6>
+                    <h2 class="text-success fw-bold">@malePatients</h2>
+                    <small class="text-muted">Male patient records</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Female Patients</h6>
+                    <h2 class="text-warning fw-bold">@femalePatients</h2>
+                    <small class="text-muted">Female patient records</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Contact Available</h6>
+                    <h2 class="text-danger fw-bold">@patientsWithPhone</h2>
+                    <small class="text-muted">Patients with phone number</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Patient Table -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Patient Records</h5>
+                <span class="badge bg-light text-primary">
+                    @totalPatients Patients
+                </span>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            @if (patients.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient Name</th>
+                                <th>Date of Birth</th>
+                                <th>Gender</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Blood Group</th>
+                                <th>Emergency Contact</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in patients)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold text-primary">
+                                            #@item.PatientId
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <strong>@item.PatientName</strong>
+                                    </td>
+
+                                    <td>
+                                        @if (item.DateOfBirth.HasValue)
+                                        {
+                                            @item.DateOfBirth.Value.ToString("dd-MM-yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not available</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (string.Equals(item.Gender, "Male",
+                                            StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <span class="badge bg-primary">Male</span>
+                                        }
+                                        else if (string.Equals(item.Gender, "Female",
+                                            StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <span class="badge bg-warning text-dark">Female</span>
+                                        }
+                                        else if (!string.IsNullOrWhiteSpace(item.Gender))
+                                        {
+                                            <span class="badge bg-secondary">@item.Gender</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not specified</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.Phone))
+                                        {
+                                            @item.Phone
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not available</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.Email))
+                                        {
+                                            @item.Email
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not available</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.BloodGroup))
+                                        {
+                                            <span class="badge bg-danger">@item.BloodGroup</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not available</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.EmergencyContact))
+                                        {
+                                            @item.EmergencyContact
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not available</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-center text-nowrap">
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.PatientId"
+                                           class="btn btn-info btn-sm">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.PatientId"
+                                           class="btn btn-warning btn-sm">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.PatientId"
+                                           class="btn btn-danger btn-sm">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <h4 class="fw-bold">No Patients Found</h4>
+
+                    <p class="text-muted">
+                        @if (!string.IsNullOrWhiteSpace(searchString))
+                        {
+                            <span>No patients match your search. Try another search term.</span>
+                        }
+                        else
+                        {
+                            <span>There are currently no patients registered.</span>
+                        }
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(searchString))
+                    {
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            Clear Search
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="Create" class="btn btn-primary">
+                            + Add First Patient
+                        </a>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,207 @@
+﻿@model HospitalManagementSystem.Models.Prescription
+
+@{
+    ViewData["Title"] = "Edit Prescription";
+}
+
+<h1>Edit Prescription</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+
+        <form asp-action="Edit" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+            <!-- Hidden Prescription ID -->
+            <input type="hidden"
+                   asp-for="PrescriptionId" />
+
+
+            <!-- Patient -->
+            <div class="mb-3">
+                <label asp-for="PatientId"
+                       class="form-label">
+                    Patient
+                </label>
+
+                <select asp-for="PatientId"
+                        class="form-select"
+                        asp-items="ViewBag.Patients">
+
+                    <option value="">
+                        -- Select Patient --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="PatientId"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Doctor -->
+            <div class="mb-3">
+                <label asp-for="DoctorId"
+                       class="form-label">
+                    Doctor
+                </label>
+
+                <select asp-for="DoctorId"
+                        class="form-select"
+                        asp-items="ViewBag.Doctors">
+
+                    <option value="">
+                        -- Select Doctor --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="DoctorId"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Medicine -->
+            <div class="mb-3">
+                <label asp-for="MedicineId"
+                       class="form-label">
+                    Medicine
+                </label>
+
+                <select asp-for="MedicineId"
+                        class="form-select"
+                        asp-items="ViewBag.Medicines">
+
+                    <option value="">
+                        -- Select Medicine --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="MedicineId"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Prescription Date -->
+            <div class="mb-3">
+                <label asp-for="PrescriptionDate"
+                       class="form-label">
+                    Prescription Date
+                </label>
+
+                <input asp-for="PrescriptionDate"
+                       type="date"
+                       class="form-control" />
+
+                <span asp-validation-for="PrescriptionDate"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Dosage -->
+            <div class="mb-3">
+                <label asp-for="Dosage"
+                       class="form-label">
+                    Dosage
+                </label>
+
+                <input asp-for="Dosage"
+                       class="form-control"
+                       placeholder="Example: 1 tablet" />
+
+                <span asp-validation-for="Dosage"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Frequency -->
+            <div class="mb-3">
+                <label asp-for="Frequency"
+                       class="form-label">
+                    Frequency
+                </label>
+
+                <input asp-for="Frequency"
+                       class="form-control"
+                       placeholder="Example: Twice a day" />
+
+                <span asp-validation-for="Frequency"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Duration -->
+            <div class="mb-3">
+                <label asp-for="Duration"
+                       class="form-label">
+                    Duration
+                </label>
+
+                <input asp-for="Duration"
+                       class="form-control"
+                       placeholder="Example: 5 days" />
+
+                <span asp-validation-for="Duration"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Instructions -->
+            <div class="mb-3">
+                <label asp-for="Instructions"
+                       class="form-label">
+                    Instructions
+                </label>
+
+                <textarea asp-for="Instructions"
+                          class="form-control"
+                          rows="4"
+                          placeholder="Example: Take after food.">
+                </textarea>
+
+                <span asp-validation-for="Instructions"
+                      class="text-danger">
+                </span>
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="mb-3">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save Changes
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Back to List
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+}

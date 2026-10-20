@@ -1,0 +1,248 @@
+﻿@model HospitalManagementSystem.Models.Medicine
+
+@{
+    ViewData["Title"] = "Edit Medicine";
+}
+
+<h1>Edit Medicine</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+
+        <form asp-action="Edit" method="post">
+
+            <input type="hidden"
+                   asp-for="MedicineId" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+
+            <!-- Medicine Name -->
+
+            <div class="mb-3">
+
+                <label asp-for="MedicineName"
+                       class="form-label">
+                </label>
+
+                <input asp-for="MedicineName"
+                       class="form-control" />
+
+                <span asp-validation-for="MedicineName"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Generic Name -->
+
+            <div class="mb-3">
+
+                <label asp-for="GenericName"
+                       class="form-label">
+                </label>
+
+                <input asp-for="GenericName"
+                       class="form-control" />
+
+                <span asp-validation-for="GenericName"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Category -->
+
+            <div class="mb-3">
+
+                <label asp-for="Category"
+                       class="form-label">
+                </label>
+
+                <select asp-for="Category"
+                        class="form-select">
+
+                    <option value="">
+                        -- Select Category --
+                    </option>
+
+                    <option value="Tablet">
+                        Tablet
+                    </option>
+
+                    <option value="Capsule">
+                        Capsule
+                    </option>
+
+                    <option value="Syrup">
+                        Syrup
+                    </option>
+
+                    <option value="Injection">
+                        Injection
+                    </option>
+
+                    <option value="Cream">
+                        Cream
+                    </option>
+
+                    <option value="Drops">
+                        Drops
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="Category"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Dosage -->
+
+            <div class="mb-3">
+
+                <label asp-for="Dosage"
+                       class="form-label">
+                </label>
+
+                <input asp-for="Dosage"
+                       class="form-control" />
+
+                <span asp-validation-for="Dosage"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Manufacturer -->
+
+            <div class="mb-3">
+
+                <label asp-for="Manufacturer"
+                       class="form-label">
+                </label>
+
+                <input asp-for="Manufacturer"
+                       class="form-control" />
+
+                <span asp-validation-for="Manufacturer"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Price -->
+
+            <div class="mb-3">
+
+                <label asp-for="Price"
+                       class="form-label">
+                </label>
+
+                <input asp-for="Price"
+                       class="form-control"
+                       type="number"
+                       step="0.01"
+                       min="0" />
+
+                <span asp-validation-for="Price"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Stock Quantity -->
+
+            <div class="mb-3">
+
+                <label asp-for="StockQuantity"
+                       class="form-label">
+                </label>
+
+                <input asp-for="StockQuantity"
+                       class="form-control"
+                       type="number"
+                       min="0" />
+
+                <span asp-validation-for="StockQuantity"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Expiry Date -->
+
+            <div class="mb-3">
+
+                <label asp-for="ExpiryDate"
+                       class="form-label">
+                </label>
+
+                <input asp-for="ExpiryDate"
+                       class="form-control"
+                       type="date" />
+
+                <span asp-validation-for="ExpiryDate"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="mb-3">
+
+                <label asp-for="Description"
+                       class="form-label">
+                </label>
+
+                <textarea asp-for="Description"
+                          class="form-control"
+                          rows="4"></textarea>
+
+                <span asp-validation-for="Description"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Save Changes
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back to List
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,7 @@
+# Use this workspace to collaborate
+workspace:
+  id: ""
+
+localResources:
+  specs:
+    - ../obj/Debug/net10.0/EndpointInfo/HospitalManagementSystem.json

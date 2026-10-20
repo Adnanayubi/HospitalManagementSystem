@@ -1,0 +1,12 @@
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+[Tt]est[Rr]esult*/
+.env
+.env.*
+appsettings.Development.json
+*.bak
+*.mdf
+*.ldf

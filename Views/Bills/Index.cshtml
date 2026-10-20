@@ -1,0 +1,219 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Bill>
+
+@{
+    ViewData["Title"] = "Bills";
+    var searchString = ViewBag.SearchString as string;
+}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Billing Management</h2>
+            <p class="text-muted">
+                Manage hospital patient bills and payments.
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>
+            Create New Bill
+        </a>
+    </div>
+
+    <!-- Success Message -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
+    }
+
+    <!-- Search Form -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <form asp-controller="Bills"
+                  asp-action="Index"
+                  method="get"
+                  class="row g-2 align-items-center">
+
+                <div class="col-md-8">
+                    <input type="text"
+                           name="searchString"
+                           value="@searchString"
+                           class="form-control"
+                           placeholder="Search by Bill ID, patient name, payment status or method..." />
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-auto">
+                    <a asp-controller="Bills"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        Clear
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Bills Table -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="text-center py-5">
+
+                    <i class="bi bi-receipt display-4 text-muted"></i>
+
+                    <h5 class="mt-3">No bills found</h5>
+
+                    <p class="text-muted">
+                        @if (!string.IsNullOrWhiteSpace(searchString))
+                        {
+                            <span>
+                                No bills match your search.
+                                Try another keyword.
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                Create your first patient bill.
+                            </span>
+                        }
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(searchString))
+                    {
+                        <a asp-controller="Bills"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            Clear Search
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="Create"
+                           class="btn btn-primary">
+                            Create Bill
+                        </a>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Bill ID</th>
+                                <th>Patient</th>
+                                <th>Bill Date</th>
+                                <th>Total Amount</th>
+                                <th>Payment Status</th>
+                                <th>Payment Method</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var bill in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>#@bill.BillId</strong>
+                                    </td>
+
+                                    <td>
+                                        @(bill.Patient?.PatientName ?? "-")
+                                    </td>
+
+                                    <td>
+                                        @bill.BillDate.ToString("dd-MM-yyyy")
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            ₹@bill.TotalAmount.ToString("N2")
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        @if (bill.PaymentStatus == "Paid")
+                                        {
+                                            <span class="badge bg-success">
+                                                Paid
+                                            </span>
+                                        }
+                                        else if (bill.PaymentStatus == "Pending")
+                                        {
+                                            <span class="badge bg-warning text-dark">
+                                                Pending
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                @(bill.PaymentStatus ?? "-")
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @(bill.PaymentMethod ?? "-")
+                                    </td>
+
+                                    <td class="text-center text-nowrap">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@bill.BillId"
+                                           class="btn btn-sm btn-info text-white">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@bill.BillId"
+                                           class="btn btn-sm btn-warning">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@bill.BillId"
+                                           class="btn btn-sm btn-danger">
+                                            Delete
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>
